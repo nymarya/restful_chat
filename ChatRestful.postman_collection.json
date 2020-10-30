@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5f18ba68-1759-41f9-9925-d166644b102e",
+		"_postman_id": "8eaab4ce-de73-47dc-821b-48dd254c242d",
 		"name": "ChatRestful",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -128,6 +128,35 @@
 					"port": "8080",
 					"path": [
 						"listMessage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "enviarMensagem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "texto",
+							"value": "\"oi!\"",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/sendMessage",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sendMessage"
 					]
 				}
 			},
