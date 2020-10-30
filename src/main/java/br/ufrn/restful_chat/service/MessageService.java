@@ -1,15 +1,24 @@
 package br.ufrn.restful_chat.service;
 
+import br.ufrn.restful_chat.model.Message;
+import br.ufrn.restful_chat.model.User;
 import br.ufrn.restful_chat.repository.MessageRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class MessageService {
@@ -18,16 +27,46 @@ public class MessageService {
     private final JwtParser jwtParser;
     static final String jwtSecret = "123456";
     static final String TOKEN_PREFIX = "Bearer ";
+    
+    @Autowired
+    private final UserService userService;
 
-    public MessageService(MessageRepository messageRepository){
+    public MessageService(MessageRepository messageRepository, UserService userService){
         this.messageRepository = messageRepository;
         jwtParser = Jwts.parser().setSigningKey(jwtSecret);
+        this.userService = userService;
     }
 
-    public boolean listMessages(HttpServletRequest request, HttpServletResponse response){
+    public List<Message> listMessages(HttpServletRequest request, HttpServletResponse response){
+    	if ( verificaToken(request, response) ) {
+    		return messageRepository.findFirst10ByOrderByDataDesc();
+    	}
+    	return null;
 
-        return verificaToken(request, response);
-
+    }
+    
+    public Message saveMessage(HttpServletRequest request, HttpServletResponse response) {
+    	if (verificaToken(request, response)) {
+    		String token = request.getHeader("authorization");
+    		User user = userService.getUser(request.getParameter("nome"));
+    		
+    		Message msg = new Message();
+    		msg.setTexto(request.getParameter("texto"));
+    		Date date = null;
+			try {
+				date = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("data"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		msg.setData(date);
+    		msg.setUser(user);
+    		messageRepository.save(msg);
+    		
+    		return messageRepository.save(msg);
+    	}
+    	
+        return null;
     }
 
     public boolean verificaToken(HttpServletRequest request, HttpServletResponse response) {
@@ -58,5 +97,7 @@ public class MessageService {
     private Claims decodeToken(String token) {
         return jwtParser.parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody();
     }
+    
+    
 
 }

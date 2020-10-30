@@ -39,6 +39,10 @@ public class UserService {
         return userRepository.findAll();
 
     }
+    
+    public User getUser(String token) {
+    	return userRepository.findByName(token).get(0);
+    }
 
     public void entrar(HttpServletResponse response, User user){
 

@@ -6,16 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 public class MessageController {
 
     private final MessageService messageService;
+   
 
     public MessageController(MessageService messageService){
         this.messageService = messageService;
@@ -25,19 +27,17 @@ public class MessageController {
     public List<Message> listMessages(HttpServletRequest request, HttpServletResponse response){
 
         System.out.println("Método sendo chamado");
-        messageService.listMessages(request, response);
+        
         // TODO: listar as ultimas 10 mensagens do chat
 
-        return null;
+        return messageService.listMessages(request, response);
 
     }
 
     @PostMapping("/sendMessage")
-    public boolean sendMessage(@PathVariable("texto") String texto, @PathVariable("data") Date data){
-
-        // TODO: listar as ultimas 10 mensagens do chat
-
-        return false;
+    public Message sendMessage(HttpServletRequest request, HttpServletResponse response){
+    	System.out.println("enviando");
+    	return messageService.saveMessage(request, response);
 
     }
 
