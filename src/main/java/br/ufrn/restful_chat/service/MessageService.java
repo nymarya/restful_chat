@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,9 @@ public class MessageService {
 
     public List<Message> listMessages(HttpServletRequest request, HttpServletResponse response){
     	if ( verificaToken(request, response) ) {
-    		return messageRepository.findFirst10ByOrderByDataDesc();
+    		List<Message> msgs = messageRepository.findFirst10ByOrderByDataDesc();
+    		Collections.reverse(msgs);
+    		return msgs;
     	}
     	return null;
 
@@ -48,7 +51,9 @@ public class MessageService {
     public Message saveMessage(HttpServletRequest request, HttpServletResponse response) {
     	if (verificaToken(request, response)) {
     		String token = request.getHeader("authorization");
-    		User user = userService.getUser(request.getParameter("nome"));
+    		Claims claims = decodeToken(token);
+    		
+    		User user = userService.getUser(claims.getSubject());
     		
     		Message msg = new Message();
     		msg.setTexto(request.getParameter("texto"));
