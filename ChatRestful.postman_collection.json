@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "5f18ba68-1759-41f9-9925-d166644b102e",
+		"name": "ChatRestful",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registrarUsuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "jaine",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "senha1234",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/registrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"registrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarUsuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/listarUsuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"listarUsuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loginUsuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "jaine",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "senha1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/entrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entrar"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "jaine",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarMensagens",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYWluZSIsImV4cCI6MTYwNDEwOTUzOH0.68raL_bUrxL7ftkP714dK15nYXVrlpprKBOLuZTKQuOnv6fvE0rUItQT4U39v3JXL5a31UeX2KsSWUfS0M85jw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/listMessage",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"listMessage"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

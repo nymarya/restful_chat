@@ -1,4 +1,4 @@
-package br.ufrn.restful_chat;
+package br.ufrn.restful_chat.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,11 +11,10 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long id_user;
 
 	private String name;
 	private String password;
-	private String token;
 
 	public String getName() {
 		return name;
@@ -29,11 +28,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
+
 
 }
